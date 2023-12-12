@@ -25,10 +25,10 @@ jobs:
       - name: Activate Python venv
         run: source venv/bin/activate
 
-      - name: Install pre-commit and dependencies
+      - name: Install pre-commit, black, and Jupyter dependencies
         run: |
           source venv/bin/activate
-          pip install pre-commit black
+          pip install pre-commit black black[jupyter]
 
       - name: Run pre-commit hooks
         run: |
