@@ -26,7 +26,9 @@ def create_db_engine():
     user = env_values["POSTGRES_USER"]
     server = env_values["POSTGRES_SERVER"]
 
-    engine = create_engine(f"postgresql://{user}:{encoded_password}@{server}/{database}")
+    engine = create_engine(
+        f"postgresql://{user}:{encoded_password}@{server}/{database}"
+    )
     try:
         with engine.connect() as connection_str:
             print(f'Successfully connected to the PostgreSQL "{database}" database')

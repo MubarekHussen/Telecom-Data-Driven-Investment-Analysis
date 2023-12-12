@@ -32,7 +32,9 @@ def clean_data(df):
     numerical_columns = numerical_columns.drop(columns_to_exclude)
 
     # Fill missing numerical values with mean
-    num_df[numerical_columns] = num_df[numerical_columns].fillna(num_df[numerical_columns].mean())
+    num_df[numerical_columns] = num_df[numerical_columns].fillna(
+        num_df[numerical_columns].mean()
+    )
 
     final_df = num_df.copy()
 
