@@ -34,6 +34,3 @@ def create_db_engine():
         print(f"Sorry failed to connect: {ex}")
 
     return engine
-
-
-eng = create_db_engine()
