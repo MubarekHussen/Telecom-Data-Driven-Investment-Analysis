@@ -18,5 +18,4 @@ repos:
         name: Black Code Formatter
         description: Checks code formatting using Black with max line length of 120 characters
         args:
-          - --check
           - --line-length=120
