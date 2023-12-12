@@ -19,9 +19,23 @@ jobs:
         with:
           python-version: "3.10"
 
-      - name: Install pre-commit dependencies
+      - name: Create Python venv
+        run: python -m venv venv
+
+      - name: Activate Python venv
+        run: source venv/bin/activate
+
+      - name: Install pre-commit and dependencies
         run: |
-          pip install pre-commit
+          source venv/bin/activate
+          pip install pre-commit black
 
       - name: Run pre-commit hooks
-        run: pre-commit run --all-files --verbose
+        run: |
+          source venv/bin/activate
+          pre-commit run --all-files --verbose
+
+      - name: Check code formatting with Black
+        run: |
+          source venv/bin/activate
+          black --check --line-length=120 .
