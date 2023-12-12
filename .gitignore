@@ -1,2 +1,5 @@
 # Ignoring .env from adding to git
 notebooks/.env
+
+# Ignoring __pycache__ from adding to git
+utils/__pycache__
