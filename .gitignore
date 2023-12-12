@@ -1,0 +1,2 @@
+# Ignoring .env from adding to git
+notebooks/.env
