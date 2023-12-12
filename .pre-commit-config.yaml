@@ -16,6 +16,3 @@ repos:
     hooks:
       - id: black
         name: Black Code Formatter
-        description: Checks code formatting using Black with max line length of 120 characters
-        args:
-          - --line-length=120
