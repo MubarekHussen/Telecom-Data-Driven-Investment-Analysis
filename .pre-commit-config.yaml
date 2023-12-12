@@ -1,0 +1,21 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v2.3.0
+    hooks:
+      - id: check-yaml
+        name: Check YAML Syntax
+        description: Checks YAML files for syntax errors.
+      - id: end-of-file-fixer
+        name: End-of-File Fixer
+        description: Ensures files end with a newline character.
+      - id: trailing-whitespace
+        name: Trailing Whitespace Remover
+        description: Detects and removes trailing whitespace from files.
+  - repo: https://github.com/psf/black
+    rev: 22.10.0
+    hooks:
+      - id: black
+        name: Black Code Formatter
+        description: Automatically formats code using Black with max line length of 120 characters
+        args:
+          - --line-length=120
