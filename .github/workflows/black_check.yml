@@ -19,9 +19,18 @@ jobs:
         with:
           python-version: "3.10"
 
-      - name: Install dependencies
+      - name: Install Black with Jupyter support
         run: |
-          pip install black
+          pip install black[jupyter]
 
-      - name: Check code formatting
-        run: black --check .
+      - name: Install pre-commit
+        run: |
+          pip install pre-commit
+
+      - name: Run pre-commit hooks
+        run: |
+          pre-commit run --all-files --verbose
+
+      - name: Check code formatting with Black
+        run: |
+          black --check --line-length=120 . --exclude="/path/to/jupyter_notebooks/*.ipynb"
