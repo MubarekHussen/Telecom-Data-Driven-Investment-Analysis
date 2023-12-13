@@ -1,44 +1,108 @@
-def clean_data(df):
+class DataCleaner:
     """
-    Perform data cleaning operations on the given DataFrame.
+    A class used to clean data in a DataFrame.
 
-    Args:
-    - df: DataFrame to be cleaned
+    ...
 
-    Returns:
-    - cleaned_df: Cleaned DataFrame
+    Attributes
+    ----------
+    df : DataFrame
+        a pandas DataFrame to be cleaned
+    columns_to_exclude : list
+        a list of column names to be excluded from certain operations
+
+    Methods
+    -------
+    drop_null_rows():
+        Drops rows that have a null value in any of the columns that have exactly one null value.
+    fill_categorical():
+        Fills missing categorical values with the mode of each column.
+    fill_numerical():
+        Fills missing numerical values with the mean of each column, excluding certain specified columns.
+    fill_unknown():
+        Fills missing values in certain specified columns with the string "Unknown".
+    clean():
+        Performs all the cleaning steps and returns the cleaned DataFrame.
     """
-    # Get the columns that have exactly 1 null value
-    columns_with_one_null = df.columns[df.isnull().sum() == 1]
 
-    # Drop rows that have a null value in any of those columns
-    cleaned_df = df.dropna(subset=columns_with_one_null)
+    def __init__(self, df):
+        """
+        Constructs all the necessary attributes for the DataCleaner object.
 
-    obj_type_df = cleaned_df.copy()
+        Parameters
+        ----------
+            df : DataFrame
+                a pandas DataFrame to be cleaned
+        """
+        self.df = df.copy()
+        self.columns_to_exclude = ["Bearer Id", "IMSI", "MSISDN/Number", "IMEI"]
 
-    # Fill missing categorical values with mode
-    categorical_columns = obj_type_df.select_dtypes(include="object").columns
-    obj_type_df[categorical_columns] = obj_type_df[categorical_columns].fillna(
-        obj_type_df[categorical_columns].mode().iloc[0]
-    )
+    def drop_null_rows(self):
+        """
+        Drops rows that have a null value in any of the columns that have exactly one null value.
 
-    num_df = obj_type_df.copy()
+        Returns
+        -------
+        self : object
+            Returns self to allow chaining.
+        """
+        columns_with_one_null = self.df.columns[self.df.isnull().sum() == 1]
+        self.df = self.df.dropna(subset=columns_with_one_null)
+        return self
 
-    # Get numerical columns
-    numerical_columns = num_df.select_dtypes(include=["float64"]).columns
+    def fill_categorical(self):
+        """
+        Fills missing categorical values with the mode of each column.
 
-    # Remove the columns you want to exclude
-    columns_to_exclude = ["Bearer Id", "IMSI", "MSISDN/Number", "IMEI"]
-    numerical_columns = numerical_columns.drop(columns_to_exclude)
+        Returns
+        -------
+        self : object
+            Returns self to allow chaining.
+        """
+        categorical_columns = self.df.select_dtypes(include="object").columns
+        self.df[categorical_columns] = self.df[categorical_columns].fillna(
+            self.df[categorical_columns].mode().iloc[0]
+        )
+        return self
 
-    # Fill missing numerical values with mean
-    num_df[numerical_columns] = num_df[numerical_columns].fillna(
-        num_df[numerical_columns].mean()
-    )
+    def fill_numerical(self):
+        """
+        Fills missing numerical values with the mean of each column, excluding certain specified columns.
 
-    final_df = num_df.copy()
+        Returns
+        -------
+        self : object
+            Returns self to allow chaining.
+        """
+        numerical_columns = self.df.select_dtypes(include=["float64"]).columns
+        numerical_columns = numerical_columns.drop(self.columns_to_exclude)
+        self.df[numerical_columns] = self.df[numerical_columns].fillna(
+            self.df[numerical_columns].mean()
+        )
+        return self
 
-    columns_to_fill = ["Bearer Id", "IMSI", "MSISDN/Number", "IMEI"]
-    final_df[columns_to_fill] = final_df[columns_to_fill].fillna("Unknown")
+    def fill_unknown(self):
+        """
+        Fills missing values in certain specified columns with the string "Unknown".
 
-    return final_df
+        Returns
+        -------
+        self : object
+            Returns self to allow chaining.
+        """
+        self.df[self.columns_to_exclude] = self.df[self.columns_to_exclude].fillna(
+            "Unknown"
+        )
+        return self
+
+    def clean(self):
+        """
+        Performs all the cleaning steps and returns the cleaned DataFrame.
+
+        Returns
+        -------
+        DataFrame
+            The cleaned DataFrame.
+        """
+        self.drop_null_rows().fill_categorical().fill_numerical().fill_unknown()
+        return self.df
