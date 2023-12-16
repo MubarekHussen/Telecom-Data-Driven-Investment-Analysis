@@ -14,7 +14,7 @@ def display_handsets():
     fig.update_traces(marker_color="orange")
     fig.update_layout(font=dict(size=14))
     fig.update_layout(title_text="Top 10 Handset Types", font=dict(size=14))
-
+    st.title("Top 10 Handset Types")
     st.plotly_chart(fig)
 
 
@@ -25,6 +25,7 @@ def display_manufacturers():
     df = pd.read_csv("../data/top_3_manufacturers.csv")
     fig = px.pie(df, values="count", names="Handset Manufacturer", hole=0.5)
     fig.update_layout(title_text="Top 3 Handset Manufacturers")
+    st.title("Top 3 Handset Manufacturers")
     st.plotly_chart(fig)
 
 
@@ -85,7 +86,7 @@ def display_top_3_apps():
     ax.set_ylabel("Application")
     ax.set_title("Top 3 Most Used Applications")
     ax.invert_yaxis()
-
+    st.title("Top 3 Most Used Applications")
     st.pyplot(fig)
 
 
@@ -104,11 +105,33 @@ def display_histograms():
     axs[1].set_ylabel("Frequency")
     axs[1].set_title("Total Download Data")
     fig.suptitle("Total Download and Upload Grouped by User")
+    st.title("Total Download and Upload Grouped by User")
     st.pyplot(fig)
+
+
+def display_satisfaction_scores():
+    """
+    This function reads the 'satisfaction_scores.csv' file, creates a pie chart for 'Satisfaction Score Categories', and displays the plot in a Streamlit app.
+    """
+    df = pd.read_csv("../data/satisfaction_scores.csv")
+    category_counts = df["Satisfaction Category"].value_counts()
+    category_percentages = category_counts / category_counts.sum() * 100
+    plt.figure(figsize=(10, 6))
+    plt.pie(
+        category_percentages,
+        labels=category_percentages.index,
+        autopct="%1.1f%%",
+        startangle=140,
+    )
+    plt.axis("equal")
+    plt.title("Satisfaction Score Categories")
+    st.title("Satisfaction Score Categories")
+    st.pyplot(plt)
 
 
 display_manufacturers()
 display_handsets()
-display_clusters()
 display_top_3_apps()
 display_histograms()
+display_clusters()
+display_satisfaction_scores()
