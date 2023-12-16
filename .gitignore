@@ -5,4 +5,7 @@ utils/.env
 utils/__pycache__
 
 # Ignoring user_info from adding to git
-data/user_info.csv
+data/*.csv
+
+# Ignoring image
+dashboard/*.png
