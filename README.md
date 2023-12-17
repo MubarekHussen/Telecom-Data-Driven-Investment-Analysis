@@ -31,6 +31,10 @@ The analysis employs sophisticated data analytics techniques to extract meaningf
 - `tests/`: Contains the unit-tests and the required testing.
 - `utils/`: contains utility functions and loading functions.
 
+## Visualization
+
+[Dashboard](screenshots/telecom_dashboard.pdf)
+
 ## Conclusion
 
 This repository serves as a comprehensive resource detailing the analysis conducted on TellCo's telecom dataset, presenting valuable insights and strategic recommendations to aid in the investor's decision-making process regarding the potential acquisition or sale of TellCo.
