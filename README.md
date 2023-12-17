@@ -33,7 +33,7 @@ The analysis employs sophisticated data analytics techniques to extract meaningf
 
 ## Visualization
 
-[Dashboard](screenshots/telecom_dashboard.pdf)
+[Dashboard](Screenshots/telecom_dashboard.pdf)
 
 ## Conclusion
 
